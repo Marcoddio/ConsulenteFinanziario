@@ -81,6 +81,16 @@ h1,h2,h3,h4{
 a{color:var(--ink);text-decoration:none}
 a:hover{text-decoration:underline;text-underline-offset:3px}
 
+.sr-only{
+  position:absolute;
+  width:1px;height:1px;
+  padding:0;margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+
 .container{
   max-width:1200px;
   margin:0 auto;
@@ -133,6 +143,12 @@ nav.topnav{
   border:none;
   cursor:pointer;
   font-family:inherit;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  line-height:1.2;
+  white-space:nowrap;
 }
 .nav-cta:hover{background:var(--gray-700);text-decoration:none}
 
@@ -268,6 +284,9 @@ strong{font-weight:700;color:var(--ink)}
   line-height:1.3;
 }
 .hero-card-val .italic-em{font-weight:600;font-style:italic}
+.hero-card-val strong{font-weight:800;letter-spacing:-.01em}
+.hero-card.accent .hero-card-val strong{color:var(--ink)}
+.hero-card:not(.accent) .hero-card-val strong{color:var(--white)}
 .hero-card-val small{font-size:13px;color:rgba(255,255,255,.55);display:block;margin-top:6px;font-weight:400;line-height:1.4}
 .hero-card.accent{
   background:var(--white);
@@ -414,12 +433,54 @@ section{padding:100px 0;position:relative}
   text-transform:uppercase;
   border:1px solid rgba(255,255,255,.2);
 }
+.for-card-header{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  margin-bottom:18px;
+  flex-wrap:wrap;
+}
+.for-card-header .for-card-num{margin-bottom:0}
+.for-card-header .for-card-tag{margin-bottom:0;margin-top:14px}
 
 /* ===== CONFIGURATORE ===== */
 .configurator{
   background:var(--gray-50);
   padding:100px 0;
   position:relative;
+}
+.config-live-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--ink);
+  color:var(--white);
+  padding:7px 14px 7px 12px;
+  border-radius:100px;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  margin:0 auto 18px;
+  position:relative;
+  z-index:2;
+}
+.config-live-tag .live-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#25D366;
+  box-shadow:0 0 0 0 rgba(37,211,102,.6);
+  animation:liveDotPulse 1.6s ease-in-out infinite;
+}
+.config-live-tag-wrap{
+  text-align:center;
+  margin-bottom:12px;
+}
+@keyframes liveDotPulse{
+  0%{box-shadow:0 0 0 0 rgba(37,211,102,.65)}
+  70%{box-shadow:0 0 0 9px rgba(37,211,102,0)}
+  100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}
 }
 .config-box{
   background:var(--white);
@@ -429,6 +490,27 @@ section{padding:100px 0;position:relative}
   margin:0 auto;
   overflow:hidden;
   border:1px solid var(--gray-100);
+  position:relative;
+  animation:configBoxAttention 4.5s ease-in-out infinite;
+}
+@keyframes configBoxAttention{
+  0%,100%{
+    box-shadow:0 8px 32px rgba(0,0,0,.08), 0 0 0 0 rgba(10,10,10,0);
+    transform:translateY(0);
+  }
+  50%{
+    box-shadow:0 18px 50px rgba(0,0,0,.14), 0 0 0 1px rgba(10,10,10,.04);
+    transform:translateY(-3px);
+  }
+}
+.config-box:hover{
+  animation:none;
+  box-shadow:0 20px 60px rgba(0,0,0,.16);
+  transform:translateY(-3px);
+  transition:all .3s ease;
+}
+@media (prefers-reduced-motion: reduce){
+  .config-box,.config-next,.config-live-tag .live-dot{animation:none !important}
 }
 .config-progress{
   background:var(--gray-100);
@@ -571,10 +653,11 @@ section{padding:100px 0;position:relative}
 }
 
 .config-nav{
-  display:flex;
-  justify-content:space-between;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
   align-items:center;
-  margin-top:20px;
+  margin-top:28px;
+  gap:12px;
 }
 .config-back{
   background:none;
@@ -585,6 +668,7 @@ section{padding:100px 0;position:relative}
   font-size:14px;
   padding:8px 0;
   font-weight:500;
+  justify-self:start;
 }
 .config-back:hover{color:var(--ink)}
 .config-back:disabled{visibility:hidden}
@@ -592,16 +676,39 @@ section{padding:100px 0;position:relative}
   background:var(--ink);
   color:var(--white);
   border:none;
-  padding:14px 28px;
+  padding:16px 36px;
   border-radius:100px;
   cursor:pointer;
   font-family:inherit;
-  font-size:14px;
-  font-weight:500;
-  transition:all .2s ease;
+  font-size:15px;
+  font-weight:600;
+  transition:background .25s ease, transform .25s ease;
+  grid-column:2;
+  justify-self:center;
+  letter-spacing:.01em;
+  position:relative;
 }
-.config-next:hover:not(:disabled){background:var(--gray-700)}
-.config-next:disabled{background:var(--gray-200);color:var(--gray-400);cursor:not-allowed}
+.config-next:not(:disabled){
+  animation:configNextPulse 2.4s ease-in-out infinite;
+  box-shadow:0 8px 24px rgba(10,10,10,.2);
+}
+.config-next:hover:not(:disabled){
+  background:var(--gray-700);
+  animation:none;
+  transform:translateY(-2px) scale(1.04);
+  box-shadow:0 14px 36px rgba(10,10,10,.32);
+}
+.config-next:disabled{
+  background:var(--gray-200);
+  color:var(--gray-400);
+  cursor:not-allowed;
+  animation:none;
+  box-shadow:none;
+}
+@keyframes configNextPulse{
+  0%,100%{box-shadow:0 8px 24px rgba(10,10,10,.2);transform:translateY(0)}
+  50%{box-shadow:0 14px 36px rgba(10,10,10,.35);transform:translateY(-2px)}
+}
 
 /* === RESULT === */
 .config-result{
@@ -952,6 +1059,62 @@ section{padding:100px 0;position:relative}
   font-size:15px;
   font-weight:500;
   letter-spacing:-.01em;
+}
+
+.linkedin-trust{
+  display:flex;
+  gap:18px;
+  align-items:flex-start;
+  margin-top:32px;
+  padding:22px 24px;
+  background:var(--off-white);
+  border:1px solid var(--gray-200);
+  border-left:3px solid #0A66C2;
+  border-radius:var(--radius);
+  position:relative;
+}
+.linkedin-trust-icon{
+  flex-shrink:0;
+  width:38px;
+  height:38px;
+  border-radius:10px;
+  background:#0A66C2;
+  color:var(--white);
+  display:grid;
+  place-items:center;
+}
+.linkedin-trust-icon svg{width:20px;height:20px}
+.linkedin-trust-body{flex:1}
+.linkedin-trust-title{
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:-.01em;
+  margin-bottom:6px;
+  color:var(--ink);
+}
+.linkedin-trust p{
+  font-size:14px;
+  color:var(--ink-soft);
+  line-height:1.65;
+  margin-bottom:14px;
+}
+.linkedin-trust-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--ink);
+  color:var(--white) !important;
+  padding:10px 18px;
+  border-radius:100px;
+  font-size:13px;
+  font-weight:600;
+  transition:all .25s ease;
+  text-decoration:none !important;
+}
+.linkedin-trust-btn:hover{
+  background:#0A66C2;
+  transform:translateY(-1px);
+  box-shadow:0 6px 18px rgba(10,102,194,.28);
 }
 
 /* ===== FAQ ===== */
@@ -1475,6 +1638,9 @@ footer a:hover{color:var(--white);text-decoration:none}
   .nav-logo-text small{font-size:9px}
   footer{padding:50px 0 24px}
   .faq-filter{padding:8px 16px;font-size:12px}
+  .configurator{padding:70px 0}
+  .config-live-tag{font-size:10px;padding:6px 12px 6px 11px;letter-spacing:.12em}
+  .config-next{padding:14px 28px;font-size:14px}
 }
 @media (max-width:640px){
   .container{padding:0 18px}
@@ -1484,12 +1650,15 @@ footer a:hover{color:var(--white);text-decoration:none}
   .hero-eyebrow{font-size:10px;margin-bottom:20px}
   .hero-ctas{flex-direction:column;align-items:stretch;width:100%}
   .hero-ctas .btn-primary,.hero-ctas .btn-secondary{justify-content:center;width:100%;padding:14px 22px}
+  .hero-card-val{font-size:18px}
   section{padding:60px 0}
   .section-title{font-size:30px}
   .section-sub{font-size:15px;margin-bottom:40px}
   .for-card{padding:28px 22px}
   .for-card h3{font-size:19px;margin:14px 0 10px}
   .for-card-num{font-size:36px}
+  .for-card-header{gap:12px}
+  .for-card-header .for-card-tag{font-size:9.5px;letter-spacing:.12em;padding:4px 9px;margin-top:10px}
   .config-question{font-size:22px}
   .config-help{font-size:14px;margin-bottom:28px}
   .config-body,.config-result{padding:28px 20px}
@@ -1497,6 +1666,9 @@ footer a:hover{color:var(--white);text-decoration:none}
   .config-option-text strong{font-size:14px}
   .config-option-text small{font-size:12px}
   .config-slider-value{font-size:38px}
+  .config-nav{gap:8px;margin-top:24px}
+  .config-back{font-size:13px}
+  .config-next{padding:13px 22px;font-size:13.5px}
   .result-headline{font-size:24px}
   .result-desc{font-size:14.5px}
   .result-cta-box h3{font-size:22px}
@@ -1510,6 +1682,11 @@ footer a:hover{color:var(--white);text-decoration:none}
   .how-points-content span{font-size:13.5px}
   .about-lead{font-size:18px;padding-left:16px}
   .about-text p{font-size:14.5px}
+  .linkedin-trust{padding:18px 18px;gap:14px;flex-direction:column}
+  .linkedin-trust-icon{width:36px;height:36px}
+  .linkedin-trust-title{font-size:14.5px}
+  .linkedin-trust p{font-size:13.5px}
+  .linkedin-trust-btn{padding:9px 16px;font-size:12.5px;align-self:flex-start}
   .fee-card h3{font-size:26px}
   .fee-card{padding:30px 22px}
   .faq-filters{gap:6px;margin-bottom:30px}
@@ -1517,7 +1694,10 @@ footer a:hover{color:var(--white);text-decoration:none}
   .faq-q{font-size:15px;padding:18px 20px}
   .faq-a-inner{padding:0 20px 20px;font-size:14px}
   .contact-form{padding:24px 20px}
+  .contact-method{margin-bottom:18px;gap:14px}
+  .contact-method-ico{width:40px;height:40px}
   .form-group input,.form-group select,.form-group textarea{font-size:14px;padding:12px 14px}
+  .form-check label{font-size:12.5px;line-height:1.5}
   .nav-inner{padding:14px 18px}
   .nav-logo-text small{display:none}
   .hero-trust{font-size:10px;padding:8px 16px;letter-spacing:.08em}
@@ -1538,6 +1718,14 @@ footer a:hover{color:var(--white);text-decoration:none}
   .hero-trust{font-size:9.5px;padding:7px 14px}
   .faq-filter{padding:7px 12px;font-size:11px}
   .for-card{padding:24px 20px}
+  .for-card-header{gap:10px}
+  .for-card-header .for-card-tag{font-size:9px;padding:3px 8px}
+  .config-live-tag{font-size:9.5px;padding:5px 10px;letter-spacing:.1em}
+  .config-next{padding:12px 20px;font-size:13px}
+  .config-back{font-size:12px}
+  .nav-logo img{height:30px}
+  .nav-logo-text{font-size:13px}
+  .nav-cta{padding:8px 12px;font-size:11.5px}
 }
 </style>
 </head>
@@ -1585,7 +1773,7 @@ footer a:hover{color:var(--white);text-decoration:none}
         </div>
         <div class="hero-card accent">
           <div class="hero-card-label">Indipendenza totale</div>
-          <div class="hero-card-val">Zero commissioni<small>dai prodotti che ti consiglio</small></div>
+          <div class="hero-card-val"><strong>Zero commissioni</strong><small>dai prodotti che ti consiglio</small></div>
         </div>
         <div class="hero-card">
           <div class="hero-card-label">I tuoi soldi</div>
@@ -1614,16 +1802,18 @@ footer a:hover{color:var(--white);text-decoration:none}
       <div class="for-card">
         <div class="for-card-num">02</div>
         <h3>Non ti fidi dei prodotti della tua banca</h3>
-        <p>Ti hanno proposto <strong>fondi, polizze, gestioni patrimoniali</strong>. Hai capito poco, le commissioni sono alte e hai la sensazione che <strong>qualcuno guadagni più di te</strong> sui tuoi stessi risparmi.</p>
+        <p>Ti hanno proposto <strong>fondi, polizze, gestioni patrimoniali</strong> con nomi accattivanti e brochure patinate. Hai capito poco, le commissioni sono alte — <strong>spesso il 2-3% all'anno</strong>, che nel tempo si mangiano gran parte del rendimento — e hai la sensazione che <strong>qualcuno guadagni più di te</strong> sui tuoi stessi risparmi. Non è un'impressione: il modello a retrocessioni è strutturato esattamente così, e ti porti dietro <strong>costi nascosti che pochi ti spiegheranno mai con chiarezza</strong>.</p>
       </div>
       <div class="for-card">
         <div class="for-card-num">03</div>
         <h3>Vuoi un piano semplice e tuo</h3>
-        <p>Non cerchi rendimenti miracolosi. Cerchi qualcuno che ti spieghi come funziona davvero, costruisca un portafoglio adatto a te, e <strong>ti lasci libero di gestirlo</strong>.</p>
+        <p>Non cerchi <strong>rendimenti miracolosi</strong> né l'investimento del momento. Cerchi qualcuno che ti spieghi <strong>come funziona davvero</strong> il mondo dei mercati finanziari, costruisca un portafoglio adatto a te — alla tua età, ai tuoi obiettivi, alla tua reale tolleranza al rischio — e <strong>ti lasci libero di gestirlo</strong> in autonomia, senza vincolarti per anni a commissioni ricorrenti che non ti darebbero alcun valore aggiunto reale.</p>
       </div>
       <div class="for-card featured">
-        <span class="for-card-tag">Spesso ignorato</span>
-        <div class="for-card-num">04</div>
+        <div class="for-card-header">
+          <div class="for-card-num">04</div>
+          <span class="for-card-tag">Spesso ignorato</span>
+        </div>
         <h3>Vuoi pagare meno tasse — legalmente</h3>
         <p>La fiscalità degli investimenti in Italia è piena di <strong>leve perfettamente legali</strong> ma poco conosciute: compensazione di plusvalenze e minusvalenze, scelta tra <strong>tassazione al 12,5% e al 26%</strong>, strumenti <strong>PIR-compatibili</strong>, recupero della doppia tassazione su ETF esteri, regime <strong>amministrato vs dichiarativo</strong>. Materia che <strong>il tuo commercialista raramente approfondisce</strong>, perché non è il suo lavoro quotidiano.</p>
       </div>
@@ -1634,6 +1824,9 @@ footer a:hover{color:var(--white);text-decoration:none}
 <!-- ===== CONFIGURATORE ===== -->
 <section class="configurator" id="configuratore">
   <div class="container">
+    <div class="config-live-tag-wrap">
+      <span class="config-live-tag"><span class="live-dot"></span>Strumento interattivo · 3 min</span>
+    </div>
     <div class="section-eyebrow">Configuratore</div>
     <h2 class="section-title">Scopri il tuo profilo di investitore in <span class="italic-em">3 minuti</span></h2>
     <p class="section-sub">Sei domande semplici per capire <strong>chi sei come investitore</strong>. Alla fine ti mostro un'asset allocation indicativa e degli scenari di lungo termine. È solo un <strong>punto di partenza per ragionare</strong>, non una proposta di investimento.</p>
@@ -1647,7 +1840,7 @@ footer a:hover{color:var(--white);text-decoration:none}
       <div class="config-body" id="configBody">
         <!-- Step 1: Amount -->
         <div class="config-step" data-step="1">
-          <div class="config-step-num">Domanda 1 di 6</div>
+          <div class="config-step-num">Domanda 1 di 7</div>
           <h3 class="config-question">Quanto vorresti investire?</h3>
           <p class="config-help">Trascina lo slider sul capitale che hai disponibile oggi.</p>
           <div class="config-slider-wrap">
@@ -1665,9 +1858,38 @@ footer a:hover{color:var(--white);text-decoration:none}
           </div>
         </div>
 
-        <!-- Step 2: Horizon -->
+        <!-- Step 2: Age -->
         <div class="config-step" data-step="2" style="display:none">
-          <div class="config-step-num">Domanda 2 di 6</div>
+          <div class="config-step-num">Domanda 2 di 7</div>
+          <h3 class="config-question">In che fascia d'età ti collochi?</h3>
+          <p class="config-help">L'età è uno dei fattori più importanti per capire quanto rischio puoi davvero sostenere: più anni di investimento hai davanti, più tempo i mercati hanno per recuperare eventuali fasi negative.</p>
+          <div class="config-options" data-question="age">
+            <button class="config-option" data-value="18-30" data-score="4">
+              <span class="config-option-marker"></span>
+              <span class="config-option-text"><strong>18–30 anni</strong><small>Orizzonte molto lungo: posso permettermi più rischio</small></span>
+            </button>
+            <button class="config-option" data-value="30-45" data-score="3">
+              <span class="config-option-marker"></span>
+              <span class="config-option-text"><strong>30–45 anni</strong><small>Fase di costruzione del patrimonio</small></span>
+            </button>
+            <button class="config-option" data-value="45-60" data-score="2">
+              <span class="config-option-marker"></span>
+              <span class="config-option-text"><strong>45–60 anni</strong><small>Consolidamento, orizzonte ancora ampio</small></span>
+            </button>
+            <button class="config-option" data-value="60+" data-score="1">
+              <span class="config-option-marker"></span>
+              <span class="config-option-text"><strong>Oltre 60 anni</strong><small>Prevale la tutela del capitale</small></span>
+            </button>
+          </div>
+          <div class="config-nav">
+            <button class="config-back">← Indietro</button>
+            <button class="config-next" disabled>Avanti →</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Horizon -->
+        <div class="config-step" data-step="3" style="display:none">
+          <div class="config-step-num">Domanda 3 di 7</div>
           <h3 class="config-question">Per quanto tempo puoi lasciare questi soldi investiti?</h3>
           <p class="config-help">Più tempo dai ai tuoi soldi, più puoi assorbire le fluttuazioni dei mercati.</p>
           <div class="config-options" data-question="horizon">
@@ -1694,9 +1916,9 @@ footer a:hover{color:var(--white);text-decoration:none}
           </div>
         </div>
 
-        <!-- Step 3: Financial Capacity (NEW) -->
-        <div class="config-step" data-step="3" style="display:none">
-          <div class="config-step-num">Domanda 3 di 6</div>
+        <!-- Step 4: Financial Capacity -->
+        <div class="config-step" data-step="4" style="display:none">
+          <div class="config-step-num">Domanda 4 di 7</div>
           <h3 class="config-question">Questa cifra rispetto al tuo patrimonio totale è...</h3>
           <p class="config-help">Risposta sincera: serve a capire quanto puoi <em>realmente</em> permetterti di esporre al rischio. Non c'è una risposta giusta.</p>
           <div class="config-options" data-question="capacity">
@@ -1723,9 +1945,9 @@ footer a:hover{color:var(--white);text-decoration:none}
           </div>
         </div>
 
-        <!-- Step 4: Reaction to loss -->
-        <div class="config-step" data-step="4" style="display:none">
-          <div class="config-step-num">Domanda 4 di 6</div>
+        <!-- Step 5: Reaction to loss -->
+        <div class="config-step" data-step="5" style="display:none">
+          <div class="config-step-num">Domanda 5 di 7</div>
           <h3 class="config-question">Domani il tuo capitale scende del 30%. Cosa fai?</h3>
           <p class="config-help">È successo nel 2008 e nel 2020. Succederà ancora. La risposta che dai qui è la cosa più importante per capire chi sei come investitore.</p>
           <div class="config-options" data-question="reaction">
@@ -1756,9 +1978,9 @@ footer a:hover{color:var(--white);text-decoration:none}
           </div>
         </div>
 
-        <!-- Step 5: Experience -->
-        <div class="config-step" data-step="5" style="display:none">
-          <div class="config-step-num">Domanda 5 di 6</div>
+        <!-- Step 6: Experience -->
+        <div class="config-step" data-step="6" style="display:none">
+          <div class="config-step-num">Domanda 6 di 7</div>
           <h3 class="config-question">Quanta esperienza hai con gli investimenti?</h3>
           <p class="config-help">Anche "nessuna" è una risposta perfettamente legittima.</p>
           <div class="config-options" data-question="experience">
@@ -1785,9 +2007,9 @@ footer a:hover{color:var(--white);text-decoration:none}
           </div>
         </div>
 
-        <!-- Step 6: Goal -->
-        <div class="config-step" data-step="6" style="display:none">
-          <div class="config-step-num">Domanda 6 di 6</div>
+        <!-- Step 7: Goal -->
+        <div class="config-step" data-step="7" style="display:none">
+          <div class="config-step-num">Domanda 7 di 7</div>
           <h3 class="config-question">Cosa ti aspetti davvero da questo investimento?</h3>
           <p class="config-help">Quello che senti tu, non quello che pensi sia "giusto" rispondere.</p>
           <div class="config-options" data-question="goal">
@@ -1979,9 +2201,24 @@ footer a:hover{color:var(--white);text-decoration:none}
         <div class="hero-eyebrow">Chi sono</div>
         <h2>Marco Romani.</h2>
         <p class="about-lead">«Il modo in cui la <strong>finanza viene raccontata in Italia</strong> è una delle ragioni per cui le persone non investono. Voglio cambiare questa cosa, <strong>una persona alla volta</strong>.»</p>
-        <p>Vengo dal <strong>marketing strategico</strong>, non dal mondo della finanza tradizionale. Ho passato gli ultimi anni a costruire e dirigere strategie di crescita per aziende e per scuole di formazione di alto livello — come <strong>CMO di Open Source Management</strong> e <strong>Direttore Marketing di Mind Business School</strong> — formando insieme <strong>oltre 3.000 imprenditori</strong> e generando <strong>milioni di euro di valore misurabile</strong>.</p>
+        <p>Vengo dal <strong>marketing strategico</strong>, non dal mondo della finanza tradizionale. Negli ultimi anni ho costruito e diretto strategie di crescita per aziende e per scuole di formazione di alto livello — come <strong>CMO di Open Source Management</strong>, <strong>una delle società di consulenza aziendale più importanti in Europa</strong>, e <strong>Direttore Marketing di Mind Business School</strong> — lavorando insieme a <strong>oltre 3.000 imprenditori e alle loro aziende</strong> e generando <strong>milioni di euro di valore misurabile</strong>.</p>
         <p>Oggi sono <strong>Chief Strategy Officer di Gren Finance</strong> in Lussemburgo, dove lavoro all'interno dell'<strong>ecosistema dei fondi alternativi (RAIF)</strong>. È da questa esperienza che è nata l'idea di diventare Consulente Finanziario Autonomo: <em>ho visto come funziona la macchina dall'interno</em>, e ho visto quanto <strong>poco di questa trasparenza arriva al risparmiatore italiano medio</strong>.</p>
         <p>La mia filosofia è semplice: i mercati nel lungo termine <strong>premiano chi ha un piano e lo segue</strong>, non chi cerca di indovinare il prossimo trend. Costruisco portafogli <strong>efficienti, a basso costo, basati su evidenza scientifica</strong> e non sulle mode del momento. E te li <strong>spiego in modo che li capisci davvero</strong>.</p>
+
+        <div class="linkedin-trust">
+          <div class="linkedin-trust-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.063 2.063 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </div>
+          <div class="linkedin-trust-body">
+            <div class="linkedin-trust-title">Verifica tutto pubblicamente.</div>
+            <p>Sul mio profilo LinkedIn trovi <strong>in chiaro</strong> tutto il mio percorso: <strong>certificazioni</strong>, <strong>testimonianze di imprenditori</strong> con cui ho lavorato, le <strong>aziende</strong> e il <strong>portfolio di progetti</strong> seguiti, e l'<strong>intero background lavorativo</strong>. Niente di quello che leggi qui è non verificabile — preferisco la trasparenza al marketing.</p>
+            <a href="https://www.linkedin.com/in/marco-romani-b56411158/" target="_blank" rel="noopener" class="linkedin-trust-btn">
+              Vai al profilo LinkedIn
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+
         <div class="about-credentials">
           <div class="cred">
             <div class="cred-label">Iscrizione Albo OCF</div>
@@ -2005,7 +2242,7 @@ footer a:hover{color:var(--white);text-decoration:none}
           </div>
           <div class="cred">
             <div class="cred-label">LinkedIn</div>
-            <div class="cred-val"><a href="https://www.linkedin.com/in/marcoromani-b56411158" target="_blank" rel="noopener" style="font-size:inherit">Marco Romani →</a></div>
+            <div class="cred-val"><a href="https://www.linkedin.com/in/marco-romani-b56411158/" target="_blank" rel="noopener" style="font-size:inherit">Marco Romani →</a></div>
           </div>
         </div>
       </div>
@@ -2093,6 +2330,16 @@ footer a:hover{color:var(--white);text-decoration:none}
 
         <div class="contact-method">
           <div class="contact-method-ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.063 2.063 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </div>
+          <div>
+            <strong>LinkedIn</strong>
+            <a href="https://www.linkedin.com/in/marco-romani-b56411158/" target="_blank" rel="noopener">Marco Romani</a>
+          </div>
+        </div>
+
+        <div class="contact-method">
+          <div class="contact-method-ico">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           </div>
           <div>
@@ -2141,14 +2388,14 @@ footer a:hover{color:var(--white);text-decoration:none}
           </div>
           <div class="form-check">
             <input type="checkbox" id="cf-privacy" required>
-            <label for="cf-privacy">Ho letto e accetto la <a href="#" onclick="openPolicy('privacy');return false">Privacy Policy</a>. Acconsento al trattamento dei miei dati per essere ricontattato.</label>
+            <label for="cf-privacy">Ho letto l'<a href="#" onclick="openPolicy('privacy');return false">informativa</a> e presto il consenso al trattamento dei miei dati personali, ai sensi del Reg. UE 2016/679 (Art. 13).</label>
           </div>
-          <button type="submit" class="form-submit">Richiedi una call gratuita</button>
+          <button type="submit" class="form-submit">Apri il calendario e prenota la call</button>
         </form>
         <div class="form-success" id="formSuccess">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          <h3>Grazie! Ti ricontatto entro 24 ore.</h3>
-          <p>Ho ricevuto la tua richiesta. Ti scriverò o chiamerò per fissare la call gratuita di 30 minuti. A presto.</p>
+          <h3>Perfetto! Apro il calendario per fissare la call.</h3>
+          <p>Si è aperta una nuova scheda con il mio calendario Google: scegli direttamente lo slot che preferisci per la <strong>call gratuita di 30 minuti</strong>. Se la scheda non si è aperta, <a href="https://calendar.app.google/zVHe8P3v7DfzQrqBA" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:underline">clicca qui</a>.</p>
         </div>
       </div>
     </div>
@@ -2233,22 +2480,28 @@ footer a:hover{color:var(--white);text-decoration:none}
   <div class="modal">
     <button class="modal-close" onclick="closeModal('exitModal')">×</button>
     <div class="modal-eyebrow">Prima che tu vada via</div>
-    <h2>Ti chiamo io, <span class="italic-em">entro 24 ore</span>.</h2>
-    <p>Lascia solo nome e numero. Ti chiamo personalmente (non è un call center, non riceverai mail di marketing) per capire se posso esserti utile. Zero impegno, zero pressione.</p>
+    <h2>Prenota la call <span class="italic-em">direttamente sul mio calendario</span>.</h2>
+    <p>Lascia i tuoi dati e ti porto subito al mio calendario Google: scegli tu lo slot che preferisci per una <strong>call gratuita di 30 minuti</strong>. Zero impegno, zero pressione, niente call center.</p>
     <form id="exitForm">
       <div class="form-group">
-        <input type="text" name="name" required placeholder="Il tuo nome">
+        <label for="ex-name" class="sr-only">Nome e cognome</label>
+        <input type="text" id="ex-name" name="name" required minlength="2" placeholder="Nome e cognome *" autocomplete="name">
       </div>
       <div class="form-group">
-        <input type="tel" name="phone" required placeholder="Il tuo numero di telefono">
+        <label for="ex-email" class="sr-only">Email</label>
+        <input type="email" id="ex-email" name="email" required placeholder="Email *" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label for="ex-phone" class="sr-only">Telefono</label>
+        <input type="tel" id="ex-phone" name="phone" required minlength="6" placeholder="Numero di telefono *" autocomplete="tel">
       </div>
       <div class="form-check">
         <input type="checkbox" id="ex-privacy" required>
-        <label for="ex-privacy">Accetto la <a href="#" onclick="openPolicy('privacy');return false">Privacy Policy</a></label>
+        <label for="ex-privacy">Ho letto l'<a href="#" onclick="openPolicy('privacy');return false">informativa</a> e presto il consenso al trattamento dei miei dati personali, ai sensi del Reg. UE 2016/679 (Art. 13).</label>
       </div>
-      <button type="submit" class="form-submit">Richiamatemi entro 24h</button>
+      <button type="submit" class="form-submit">Apri il calendario e prenota la call</button>
     </form>
-    <p class="modal-foot">Di solito rispondo entro 3 ore lavorative.</p>
+    <p class="modal-foot">Tutti i campi contrassegnati con * sono obbligatori.</p>
   </div>
 </div>
 
@@ -2264,8 +2517,9 @@ footer a:hover{color:var(--white);text-decoration:none}
 /* ========== CONFIGURATORE ========== */
 const state = {
   step: 1,
-  totalSteps: 6,
+  totalSteps: 7,
   amount: 50000,
+  age: null, ageScore: 0,
   horizon: null, horizonScore: 0,
   capacity: null, capacityScore: 0,
   reaction: null, reactionScore: 0,
@@ -2327,12 +2581,12 @@ function renderStep(){
 }
 
 function showResult(){
-  // Total score from 5 scored questions: range 5-20
-  const totalScore = state.horizonScore + state.capacityScore + state.reactionScore + state.experienceScore + state.goalScore;
+  // Total score from 6 scored questions: range 6-24
+  const totalScore = state.ageScore + state.horizonScore + state.capacityScore + state.reactionScore + state.experienceScore + state.goalScore;
 
   let profile;
-  if (totalScore <= 10) profile = 'conservative';
-  else if (totalScore <= 15) profile = 'balanced';
+  if (totalScore <= 12) profile = 'conservative';
+  else if (totalScore <= 18) profile = 'balanced';
   else profile = 'dynamic';
 
   const profiles = {
@@ -2395,6 +2649,7 @@ function formatEur(n){
 document.getElementById('restartConfig').addEventListener('click', () => {
   state.step = 1;
   state.amount = 50000;
+  state.age = null; state.ageScore = 0;
   state.horizon = null; state.horizonScore = 0;
   state.capacity = null; state.capacityScore = 0;
   state.reaction = null; state.reactionScore = 0;
@@ -2428,16 +2683,20 @@ document.querySelectorAll('.faq-q').forEach(q => {
 });
 
 /* ========== CONTACT FORM ========== */
+const CALENDAR_URL = 'https://calendar.app.google/zVHe8P3v7DfzQrqBA';
+
 document.getElementById('leadForm').addEventListener('submit', e => {
   e.preventDefault();
+  // Open Google Calendar booking in new tab (browser allows it because it's user-triggered)
+  window.open(CALENDAR_URL, '_blank', 'noopener,noreferrer');
   document.getElementById('leadForm').style.display = 'none';
   document.getElementById('formSuccess').classList.add('show');
 });
 
 document.getElementById('exitForm').addEventListener('submit', e => {
   e.preventDefault();
+  window.open(CALENDAR_URL, '_blank', 'noopener,noreferrer');
   closeModal('exitModal');
-  alert('Grazie! Ti richiamo entro 24h.');
 });
 
 /* ========== COOKIE BANNER ========== */
