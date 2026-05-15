@@ -824,47 +824,103 @@ section{padding:100px 0;position:relative}
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:10px;
+  align-items:stretch;
 }
 .scenario{
   background:var(--white);
   border:1px solid var(--gray-100);
   border-radius:var(--radius-sm);
-  padding:20px 18px;
+  padding:18px 14px;
   text-align:center;
   position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.scenario.low{
+  justify-content:flex-start;
 }
 .scenario.base{
   background:var(--ink);
   color:var(--white);
   border-color:var(--ink);
 }
+.scenario.low{
+  background:var(--white);
+  border-left:3px solid #8B3A3A;
+}
+.scenario.low .scenario-value{color:#8B3A3A}
+.scenario.high{
+  background:var(--white);
+  border-left:3px solid #3F6E4A;
+}
+.scenario.high .scenario-value{color:#3F6E4A}
 .scenario-label{
-  font-size:10px;
+  font-size:9.5px;
   letter-spacing:.15em;
   text-transform:uppercase;
   color:var(--ink-mute);
-  margin-bottom:10px;
+  margin-bottom:8px;
   font-weight:600;
 }
 .scenario.base .scenario-label{color:rgba(255,255,255,.6)}
+.scenario.low .scenario-label{color:#8B3A3A;opacity:.8}
+.scenario.high .scenario-label{color:#3F6E4A;opacity:.8}
 .scenario-value{
-  font-size:25px;
+  font-size:22px;
   font-weight:500;
   margin-bottom:6px;
   letter-spacing:-.02em;
+  white-space:nowrap;
 }
-.scenario-delta{font-size:11px;color:var(--ink-mute);line-height:1.4}
+.scenario-delta{font-size:10.5px;color:var(--ink-mute);line-height:1.4}
 .scenario.base .scenario-delta{color:rgba(255,255,255,.5)}
 
+/* Confronto inflazione dentro la box Sfavorevole */
+.scenario-compare{
+  margin-top:auto;
+  padding-top:12px;
+  border-top:1px dashed var(--gray-200);
+  text-align:center;
+}
+.scenario.low .scenario-delta{
+  margin-bottom:14px;
+}
+.scenario-compare-label{
+  font-size:8.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+  margin-bottom:6px;
+  font-weight:600;
+  line-height:1.4;
+}
+.scenario-compare-value{
+  font-size:15px;
+  font-weight:500;
+  color:var(--ink-soft);
+  margin-bottom:3px;
+  letter-spacing:-.015em;
+  white-space:nowrap;
+}
+.scenario-compare-delta{
+  font-size:9.5px;
+  color:#8B3A3A;
+  opacity:.85;
+  line-height:1.4;
+  font-weight:500;
+}
+
 .result-disclaimer{
-  background:var(--gray-50);
-  border-left:3px solid var(--ink);
-  padding:18px 22px;
-  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
-  font-size:13px;
+  background:rgba(10,10,10,.025);
+  border:1px solid var(--gray-100);
+  padding:14px 18px;
+  border-radius:var(--radius-sm);
+  font-size:11.5px;
   color:var(--ink-soft);
   line-height:1.65;
-  margin-bottom:32px;
+  margin-top:18px;
+  text-align:center;
 }
 .result-disclaimer strong{color:var(--ink);font-weight:600}
 
@@ -1407,7 +1463,7 @@ footer a:hover{color:var(--white);text-decoration:none}
   color:rgba(255,255,255,.55);
   max-width:980px;
   margin:24px auto 0;
-  text-align:left;
+  text-align:center;
   line-height:1.75;
   padding:20px 24px;
   background:rgba(255,255,255,.03);
@@ -1775,8 +1831,16 @@ footer a:hover{color:var(--white);text-decoration:none}
   background:var(--gray-100);
   border-radius:7px;
   overflow:hidden;
-  margin-top:18px;
   display:flex;
+}
+.alloc-bar-title{
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--ink-mute);
+  font-weight:600;
+  margin-top:22px;
+  margin-bottom:10px;
 }
 .alloc-seg{height:100%;transition:width .4s ease}
 .seg-equity{background:#0A0A0A}
@@ -1851,6 +1915,10 @@ footer a:hover{color:var(--white);text-decoration:none}
   .config-next{padding:14px 28px;font-size:14px}
   .how-quote{font-size:16px;padding:10px 0 10px 16px;margin-bottom:20px}
   .result-headline{font-size:28px}
+  /* Scenari: confronto inflazione su mobile */
+  .scenario.low,.scenario.high{border-left-width:3px;padding-left:18px}
+  .scenario-compare{margin-top:14px;padding-top:12px}
+  .scenario-compare-value{font-size:17px}
 }
 @media (max-width:640px){
   .container{padding:0 18px}
@@ -1886,6 +1954,10 @@ footer a:hover{color:var(--white);text-decoration:none}
   .result-cta-box h3{font-size:22px}
   .result-cta-box{padding:24px 18px}
   .scenario-value{font-size:22px}
+  .scenario-compare{margin-top:12px;padding-top:10px}
+  .scenario-compare-label{font-size:9px;letter-spacing:.1em}
+  .scenario-compare-value{font-size:16px}
+  .scenario-compare-delta{font-size:10px}
   .how-text h2,.about-text h2,.contact-info h2{font-size:30px}
   .how-points li{padding:18px 0;gap:14px}
   .how-points-icon{width:38px;height:38px}
@@ -2266,6 +2338,7 @@ footer a:hover{color:var(--white);text-decoration:none}
               <div class="alloc-row" id="rowGold"><span class="alloc-dot dot-gold"></span><span>Oro</span><strong id="pctGold">5%</strong></div>
               <div class="alloc-row"><span class="alloc-dot dot-cash"></span><span>Liquidità / breve termine</span><strong id="pctCash">5%</strong></div>
             </div>
+            <div class="alloc-bar-title">Composizione</div>
             <div class="alloc-bar" aria-hidden="true">
               <div class="alloc-seg seg-equity" id="barEquity" style="width:55%"></div>
               <div class="alloc-seg seg-bond" id="barBond" style="width:30%"></div>
@@ -2273,39 +2346,36 @@ footer a:hover{color:var(--white);text-decoration:none}
               <div class="alloc-seg seg-gold" id="barGold" style="width:5%"></div>
               <div class="alloc-seg seg-cash" id="barCash" style="width:5%"></div>
             </div>
-            <div class="alloc-legend">
-              <span class="alloc-legend-item"><span class="alloc-dot dot-equity"></span>Azioni</span>
-              <span class="alloc-legend-item"><span class="alloc-dot dot-bond"></span>Obbligazioni</span>
-              <span class="alloc-legend-item"><span class="alloc-dot dot-alt"></span>Alternativi/Crypto</span>
-              <span class="alloc-legend-item"><span class="alloc-dot dot-gold"></span>Oro</span>
-              <span class="alloc-legend-item"><span class="alloc-dot dot-cash"></span>Liquidità</span>
-            </div>
           </div>
 
           <div class="result-card">
             <h4>Scenari indicativi · capitale iniziale <span id="amountLabel">50.000 €</span> · su <span id="horizonLabel">10 anni</span></h4>
             <div class="scenarios">
-              <div class="scenario">
+              <div class="scenario low">
                 <div class="scenario-label">Sfavorevole</div>
                 <div class="scenario-value" id="scenarioLow">—</div>
                 <div class="scenario-delta">in caso di mercati negativi prolungati</div>
+                <div class="scenario-compare">
+                  <div class="scenario-compare-label">Capitale fermo</div>
+                  <div class="scenario-compare-value" id="scenarioInflation">—</div>
+                  <div class="scenario-compare-delta" id="scenarioInflationLoss">—</div>
+                </div>
               </div>
               <div class="scenario base">
                 <div class="scenario-label">Base</div>
                 <div class="scenario-value" id="scenarioMid">—</div>
                 <div class="scenario-delta">scenario centrale</div>
               </div>
-              <div class="scenario">
+              <div class="scenario high">
                 <div class="scenario-label">Favorevole</div>
                 <div class="scenario-value" id="scenarioHigh">—</div>
                 <div class="scenario-delta">in caso di mercati positivi</div>
               </div>
             </div>
+            <div class="result-disclaimer">
+              <strong>Importante.</strong> Gli scenari sono illustrativi, basati su rendimenti storici di classi di attivo: <strong>non sono una previsione né una garanzia di rendimenti futuri</strong>. Il valore degli investimenti può scendere e puoi perdere parte del capitale. Questo strumento è solo educativo, non costituisce consulenza finanziaria.
+            </div>
           </div>
-        </div>
-
-        <div class="result-disclaimer">
-          <strong>Importante.</strong> Gli scenari mostrati sono illustrativi e basati su rendimenti storici di asset class di lungo periodo. <strong>Non sono una promessa né una previsione di rendimenti futuri.</strong> Il valore degli investimenti può scendere e puoi perdere parte del capitale. Questo strumento è solo educativo: non costituisce consulenza finanziaria, raccomandazione di investimento, né offerta al pubblico. Un portafoglio costruito davvero su di te richiede un'analisi completa della tua situazione patrimoniale, fiscale e personale.
         </div>
 
         <div class="result-cta-box">
@@ -2865,6 +2935,14 @@ function showResult(){
   document.getElementById('scenarioLow').textContent = formatEur(low);
   document.getElementById('scenarioMid').textContent = formatEur(mid);
   document.getElementById('scenarioHigh').textContent = formatEur(high);
+
+  // Calcolo capitale fermo a inflazione 3% annua: potere d'acquisto reale dopo "horizon" anni
+  const INFLATION = 0.03;
+  const realValue = state.amount / Math.pow(1 + INFLATION, horizon);
+  const purchaseLoss = state.amount - realValue;
+  document.getElementById('scenarioInflation').textContent = formatEur(realValue);
+  document.getElementById('scenarioInflationLoss').textContent =
+    '−' + formatEur(purchaseLoss) + ' di potere d\'acquisto';
 
   document.getElementById('configBody').style.display = 'none';
   document.getElementById('configResult').classList.add('active');
