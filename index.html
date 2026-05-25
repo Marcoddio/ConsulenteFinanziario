@@ -1528,6 +1528,13 @@ section{padding:100px 0;position:relative}
   transition:all .2s ease;
 }
 .form-submit:hover{background:var(--gray-700)}
+.form-submit:disabled{
+  background:var(--gray-300);
+  color:var(--white);
+  cursor:not-allowed;
+  opacity:.75;
+}
+.form-submit:disabled:hover{background:var(--gray-300)}
 .form-success{
   display:none;
   text-align:center;
@@ -3873,7 +3880,7 @@ Durante gli anni di studio insieme in facoltà sono stato felice di lavorare con
             <input type="checkbox" id="cf-privacy" required>
             <label for="cf-privacy">Ho letto l'<a href="#" onclick="openPolicy('privacy');return false">informativa</a> e presto il consenso al trattamento dei miei dati personali, ai sensi del Reg. UE 2016/679 (Art. 13).</label>
           </div>
-          <button type="submit" class="form-submit">Voglio maggiori info</button>
+          <button type="submit" class="form-submit" disabled>Voglio maggiori info</button>
           <p class="form-foot-note">Rispondo entro 24 ore lavorative.</p>
         </form>
         <div class="form-success" id="formSuccess">
@@ -3975,7 +3982,7 @@ Durante gli anni di studio insieme in facoltà sono stato felice di lavorare con
         <input type="checkbox" id="ex-privacy" required>
         <label for="ex-privacy">Ho letto l'<a href="#" onclick="openPolicy('privacy');return false">informativa</a> e presto il consenso al trattamento dei miei dati personali, ai sensi del Reg. UE 2016/679 (Art. 13).</label>
       </div>
-      <button type="submit" class="form-submit">Prenota la call</button>
+      <button type="submit" class="form-submit" disabled>Prenota la call</button>
     </form>
     <p class="modal-foot">Rispondo entro 24 ore lavorative.</p>
   </div>
@@ -4381,24 +4388,36 @@ document.querySelectorAll('.faq-q').forEach(q => {
 })();
 
 /* ========== CONTACT FORM ========== */
-const CALENDAR_URL = 'https://calendar.app.google/zVHe8P3v7DfzQrqBA';
+const CALENDAR_URL = 'https://calendar.app.google/NKunBWVFM7vRPbdC7';
 
-document.getElementById('leadForm').addEventListener('submit', e => {
-  e.preventDefault();
-  document.getElementById('leadForm').style.display = 'none';
-  document.getElementById('formSuccess').classList.add('show');
-});
+/* Abilita la CTA solo quando TUTTI i campi obbligatori sono compilati
+   correttamente. Al click la CTA non invia il form: apre il Google Calendar. */
+function bindFormGate(formId){
+  const form = document.getElementById(formId);
+  if (!form) return;
+  const submitBtn = form.querySelector('.form-submit');
+  if (!submitBtn) return;
 
-document.getElementById('exitForm').addEventListener('submit', e => {
-  e.preventDefault();
-  // Mostra conferma in-place al posto del form
-  const modal = document.querySelector('#exitModal .modal');
-  modal.innerHTML = '<button class="modal-close" onclick="closeModal(\'exitModal\')">×</button>' +
-    '<div class="modal-eyebrow">Richiesta ricevuta</div>' +
-    '<h2>Grazie, <span class="italic-em">ti richiamo a breve</span>.</h2>' +
-    '<p>Ho ricevuto il tuo numero. <strong>Rispondo entro 24 ore lavorative</strong> per fissare insieme la call gratuita di 30 minuti.</p>';
-  setTimeout(() => closeModal('exitModal'), 4500);
-});
+  function syncButton(){
+    submitBtn.disabled = !form.checkValidity();
+  }
+  form.addEventListener('input', syncButton);
+  form.addEventListener('change', syncButton);
+  syncButton();
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!form.checkValidity()){
+      form.reportValidity();
+      return;
+    }
+    window.open(CALENDAR_URL, '_blank', 'noopener');
+    if (formId === 'exitForm') closeModal('exitModal');
+  });
+}
+
+bindFormGate('leadForm');
+bindFormGate('exitForm');
 
 /* ========== COOKIE BANNER ========== */
 function showCookieBanner(){
