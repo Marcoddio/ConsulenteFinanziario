@@ -2903,7 +2903,7 @@ footer a:hover{color:var(--white);text-decoration:none}
               <div class="scenario low">
                 <div class="scenario-label">Sfavorevole</div>
                 <div class="scenario-value" id="scenarioLow">—</div>
-                <div class="scenario-delta">in caso di mercati negativi prolungati</div>
+                <div class="scenario-delta">in caso di mercati deboli o stagnanti</div>
                 <div class="scenario-compare">
                   <div class="scenario-compare-label">Capitale fermo</div>
                   <div class="scenario-compare-value" id="scenarioInflation">—</div>
@@ -4126,28 +4126,28 @@ function showResult(){
       desc: 'Le tue risposte indicano che la <strong>protezione del capitale è prioritaria</strong> rispetto alla crescita. Va benissimo: significa che il portafoglio giusto per te dovrà essere costruito con strumenti meno volatili, accettando rendimenti più contenuti in cambio di oscillazioni più gestibili. È un profilo adatto a chi è vicino a usare i soldi, ha bassa tolleranza alla volatilità o un orizzonte temporale breve.',
       // Allocation: azioni, obbligazioni, alternativi (crypto/materie prime), oro, liquidità
       equity: 20, bond: 60, alt: 2, gold: 8, cash: 10,
-      annLow: -0.02, annMid: 0.035, annHigh: 0.05
+      annLow: 0.015, annMid: 0.035, annHigh: 0.05
     },
     moderate: {
       name: 'Profilo Moderato',
       headline: 'Crescita misurata, rischio controllato',
       desc: 'Sei <strong>più orientato alla stabilità che alla crescita aggressiva</strong>, ma sei disposto ad accettare una quota di volatilità in cambio di un rendimento ragionevole nel lungo termine. È il profilo tipico di chi ha un orizzonte medio-lungo ma non si sente a proprio agio con scossoni significativi.',
       equity: 40, bond: 42, alt: 3, gold: 8, cash: 7,
-      annLow: -0.035, annMid: 0.05, annHigh: 0.07
+      annLow: 0.02, annMid: 0.05, annHigh: 0.07
     },
     balanced: {
       name: 'Profilo Bilanciato',
       headline: 'Un equilibrio tra crescita e stabilità',
       desc: 'Cerchi un <strong>buon rendimento ma senza sobbalzi eccessivi</strong>. È il profilo più comune e quello in cui un portafoglio ben diversificato fa davvero la differenza. Hai un orizzonte sufficientemente lungo da accettare la volatilità dei mercati, ma vuoi comunque mantenere una componente difensiva.',
       equity: 60, bond: 25, alt: 5, gold: 7, cash: 3,
-      annLow: -0.045, annMid: 0.07, annHigh: 0.11
+      annLow: 0.025, annMid: 0.07, annHigh: 0.10
     },
     dynamic: {
       name: 'Profilo Dinamico',
       headline: 'Crescita di lungo termine, con disciplina',
       desc: 'Hai <strong>orizzonte lungo, tolleri le fluttuazioni e cerchi il massimo rendimento sostenibile</strong>. Il portafoglio sarà più esposto ai mercati azionari globali e includerà una componente di asset alternativi per diversificare ulteriormente — con la piena consapevolezza che lungo la strada vedrai anni difficili. La disciplina nel mantenere il piano è il fattore decisivo per il risultato di lungo termine.',
       equity: 75, bond: 10, alt: 8, gold: 5, cash: 2,
-      annLow: -0.06, annMid: 0.10, annHigh: 0.145
+      annLow: 0.035, annMid: 0.10, annHigh: 0.135
     }
   };
 
