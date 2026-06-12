@@ -2518,8 +2518,7 @@ footer a:hover{color:var(--white);text-decoration:none}
         </div>
         <div class="hero-trust">
           <span class="dot"></span>
-          Iscritto all'Albo OCF
-        </div>
+          Idoneità professionale OCF</div>
       </div>
     </div>
   </div>
@@ -3053,8 +3052,8 @@ footer a:hover{color:var(--white);text-decoration:none}
 
         <div class="about-credentials">
           <div class="cred">
-            <div class="cred-label">Iscrizione Albo OCF</div>
-            <div class="cred-val">N° [in corso di iscrizione]</div>
+            <div class="cred-label">Idoneità professionale</div>
+            <div class="cred-val">OCF — Albo unico dei Consulenti Finanziari</div>
           </div>
           <div class="cred">
             <div class="cred-label">Ruolo attuale</div>
@@ -3062,11 +3061,11 @@ footer a:hover{color:var(--white);text-decoration:none}
           </div>
           <div class="cred">
             <div class="cred-label">Formazione</div>
-            <div class="cred-val">Laurea Magistrale Sapienza</div>
+            <div class="cred-val">BSc e MSc Università Sapienza di Roma</div>
           </div>
           <div class="cred">
             <div class="cred-label">Sede</div>
-            <div class="cred-val">Roma</div>
+            <div class="cred-val">Roma - Lussemburgo - Italia</div>
           </div>
           <div class="cred">
             <div class="cred-label">Lingue</div>
@@ -3841,7 +3840,7 @@ Durante gli anni di studio insieme in facoltà sono stato felice di lavorare con
             </div>
             <div>
               <strong>Sede</strong>
-              <span>Roma</span>
+              <span>Roma - Lussemburgo - Italia</span>
             </div>
           </div>
         </div>
@@ -3934,11 +3933,11 @@ Durante gli anni di studio insieme in facoltà sono stato felice di lavorare con
       </div>
     </div>
     <div class="compliance-note">
-      <strong>Avvertenze.</strong> Il presente sito ha finalità esclusivamente <strong>informative ed educative</strong> e non costituisce consulenza in materia di investimenti, raccomandazione personalizzata, sollecitazione al pubblico risparmio né offerta di prodotti o servizi finanziari. Il configuratore è uno <strong>strumento illustrativo</strong>: gli scenari mostrati si basano su rendimenti storici di classi di attivo e non rappresentano alcuna previsione o garanzia di rendimenti futuri. <strong>I rendimenti passati non sono indicativi di quelli futuri</strong> e il valore degli investimenti può aumentare come diminuire, con possibilità di perdita anche significativa del capitale. L'attività di consulenza è prestata esclusivamente nell'ambito di un contratto scritto formalmente sottoscritto. Marco Romani è iscritto all'Albo OCF — sezione Consulenti Finanziari Autonomi (n° [da inserire]) e opera nel rispetto della normativa di settore vigente. Per maggiori dettagli si rimanda alla <a href="#" onclick="openPolicy('privacy');return false">Privacy Policy</a> e alla <a href="#" onclick="openPolicy('cookie');return false">Cookie Policy</a>.
+      <strong>Avvertenze.</strong> Il presente sito ha finalità esclusivamente <strong>informative ed educative</strong> e non costituisce consulenza in materia di investimenti, raccomandazione personalizzata, sollecitazione al pubblico risparmio né offerta di prodotti o servizi finanziari. Il configuratore è uno <strong>strumento illustrativo</strong>: gli scenari mostrati si basano su rendimenti storici di classi di attivo e non rappresentano alcuna previsione o garanzia di rendimenti futuri. <strong>I rendimenti passati non sono indicativi di quelli futuri</strong> e il valore degli investimenti può aumentare come diminuire, con possibilità di perdita anche significativa del capitale. L'attività di consulenza è prestata esclusivamente nell'ambito di un contratto scritto formalmente sottoscritto. Marco Romani ha conseguito l'idoneità alla professione di Consulente Finanziario presso OCF - Organismo di Vigilanza e tenuta dell'albo unico dei Consulenti Finanziari e opera nel rispetto della normativa di settore vigente. Per maggiori dettagli si rimanda alla <a href="#" onclick="openPolicy('privacy');return false">Privacy Policy</a> e alla <a href="#" onclick="openPolicy('cookie');return false">Cookie Policy</a>.
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Marco Romani · Iscritto all'Albo OCF n° [da inserire]</span>
-      <span>Sede operativa: Roma · Italia · Servizio offerto su tutto il territorio nazionale</span>
+      <span>© 2026 Marco Romani · Idoneità OCF alla professione di Consulente Finanziario</span>
+      <span>Sede operativa: Roma - Lussemburgo - Italia · Servizio offerto su tutto il territorio nazionale</span>
     </div>
   </div>
 </footer>
@@ -4115,9 +4114,9 @@ function showResult(){
   const normalized = ((weighted - 8) / (32 - 8)) * 100;
 
   let profile;
-  if (normalized < 30) profile = 'conservative';
+  if (normalized < 33) profile = 'conservative';
   else if (normalized < 50) profile = 'moderate';
-  else if (normalized < 75) profile = 'balanced';
+  else if (normalized < 68) profile = 'balanced';
   else profile = 'dynamic';
 
   const profiles = {
@@ -4127,28 +4126,28 @@ function showResult(){
       desc: 'Le tue risposte indicano che la <strong>protezione del capitale è prioritaria</strong> rispetto alla crescita. Va benissimo: significa che il portafoglio giusto per te dovrà essere costruito con strumenti meno volatili, accettando rendimenti più contenuti in cambio di oscillazioni più gestibili. È un profilo adatto a chi è vicino a usare i soldi, ha bassa tolleranza alla volatilità o un orizzonte temporale breve.',
       // Allocation: azioni, obbligazioni, alternativi (crypto/materie prime), oro, liquidità
       equity: 20, bond: 60, alt: 2, gold: 8, cash: 10,
-      annLow: -0.03, annMid: 0.025, annHigh: 0.055
+      annLow: -0.02, annMid: 0.035, annHigh: 0.05
     },
     moderate: {
       name: 'Profilo Moderato',
       headline: 'Crescita misurata, rischio controllato',
       desc: 'Sei <strong>più orientato alla stabilità che alla crescita aggressiva</strong>, ma sei disposto ad accettare una quota di volatilità in cambio di un rendimento ragionevole nel lungo termine. È il profilo tipico di chi ha un orizzonte medio-lungo ma non si sente a proprio agio con scossoni significativi.',
       equity: 40, bond: 42, alt: 3, gold: 8, cash: 7,
-      annLow: -0.045, annMid: 0.04, annHigh: 0.075
+      annLow: -0.035, annMid: 0.05, annHigh: 0.07
     },
     balanced: {
       name: 'Profilo Bilanciato',
       headline: 'Un equilibrio tra crescita e stabilità',
       desc: 'Cerchi un <strong>buon rendimento ma senza sobbalzi eccessivi</strong>. È il profilo più comune e quello in cui un portafoglio ben diversificato fa davvero la differenza. Hai un orizzonte sufficientemente lungo da accettare la volatilità dei mercati, ma vuoi comunque mantenere una componente difensiva.',
       equity: 60, bond: 25, alt: 5, gold: 7, cash: 3,
-      annLow: -0.06, annMid: 0.055, annHigh: 0.095
+      annLow: -0.045, annMid: 0.07, annHigh: 0.11
     },
     dynamic: {
       name: 'Profilo Dinamico',
       headline: 'Crescita di lungo termine, con disciplina',
       desc: 'Hai <strong>orizzonte lungo, tolleri le fluttuazioni e cerchi il massimo rendimento sostenibile</strong>. Il portafoglio sarà più esposto ai mercati azionari globali e includerà una componente di asset alternativi per diversificare ulteriormente — con la piena consapevolezza che lungo la strada vedrai anni difficili. La disciplina nel mantenere il piano è il fattore decisivo per il risultato di lungo termine.',
       equity: 75, bond: 10, alt: 8, gold: 5, cash: 2,
-      annLow: -0.085, annMid: 0.075, annHigh: 0.12
+      annLow: -0.06, annMid: 0.10, annHigh: 0.145
     }
   };
 
@@ -4472,8 +4471,8 @@ const policies = {
     <p>Ai sensi degli artt. 13 e 14 del Regolamento (UE) 2016/679 (di seguito "<strong>GDPR</strong>") e del D.Lgs. 196/2003 e s.m.i. (Codice Privacy), il Titolare del trattamento fornisce all'Interessato la presente informativa relativa al trattamento dei dati personali raccolti tramite il sito e nell'eventuale prestazione del servizio di consulenza finanziaria.</p>
 
     <h3>1. Titolare del trattamento</h3>
-    <p><strong>Marco Romani</strong> — Consulente Finanziario Autonomo iscritto all'Albo unico dei Consulenti Finanziari (sezione Consulenti Finanziari Autonomi) tenuto dall'Organismo di vigilanza e tenuta dell'Albo unico dei Consulenti Finanziari (OCF), n. di iscrizione [da inserire].<br>
-    Sede operativa: Roma — Italia.<br>
+    <p><strong>Marco Romani</strong> — Consulente Finanziario Autonomo, in possesso dell'idoneità alla professione di Consulente Finanziario conseguita presso OCF - Organismo di Vigilanza e tenuta dell'albo unico dei Consulenti Finanziari.<br>
+    Sede operativa: Roma - Lussemburgo - Italia.<br>
     Email: <a href="mailto:work.marcoromani@gmail.com">work.marcoromani@gmail.com</a>.<br>
     Il Titolare non ha nominato un Responsabile della protezione dei dati (DPO), non rientrando nelle ipotesi di nomina obbligatoria ex art. 37 GDPR. È comunque possibile contattare il Titolare per qualsiasi questione relativa al trattamento dei dati personali ai recapiti sopra indicati.</p>
 
